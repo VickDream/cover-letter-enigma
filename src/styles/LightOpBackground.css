@@ -1,0 +1,80 @@
+.light-waves-bg {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  background-color: #030206;
+  overflow: hidden;
+  contain: strict;
+  transform: translateZ(0);
+}
+
+/* Base estática abajo (damos más peso al rosa en el centro) */
+.static-glow-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 45vh;
+  background: 
+    radial-gradient(ellipse at 20% 100%, rgba(0, 153, 255, 0.22) 0%, transparent 70%),
+    radial-gradient(ellipse at 50% 100%, rgba(230, 0, 126, 0.45) 0%, transparent 65%), /* Rosa con mucha más fuerza */
+    radial-gradient(ellipse at 80% 100%, rgba(255, 204, 0, 0.2) 0%, transparent 70%);
+  z-index: 1;
+}
+
+/* Faro izquierdo (Azul) */
+.lighthouse-beam-left {
+  position: absolute;
+  top: -20%;
+  left: -10%;
+  width: 50vw;
+  height: 60vh;
+  background: radial-gradient(circle at top center, rgba(0, 153, 255, 0.28) 0%, transparent 70%);
+  transform-origin: top center;
+  animation: sweepLeft 14s ease-in-out infinite alternate;
+  will-change: transform;
+  z-index: 1;
+}
+
+/* Faro derecho (Amarillo) */
+.lighthouse-beam-right {
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: 50vw;
+  height: 60vh;
+  background: radial-gradient(circle at top center, rgba(255, 204, 0, 0.22) 0%, transparent 70%);
+  transform-origin: top center;
+  animation: sweepRight 16s ease-in-out infinite alternate;
+  will-change: transform;
+  z-index: 1;
+}
+
+/* Animaciones de los faros */
+@keyframes sweepLeft {
+  0% { transform: rotate(-12deg); }
+  100% { transform: rotate(12deg); }
+}
+
+@keyframes sweepRight {
+  0% { transform: rotate(12deg); }
+  100% { transform: rotate(-12deg); }
+}
+
+/* Resplandor ambiental central (El rosa ahora toma el control total del centro de la tarjeta) */
+.ambient-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 45%, rgba(230, 0, 126, 0.2) 0%, rgba(230, 0, 126, 0.05) 45%, transparent 75%);
+  animation: breathe 10s ease-in-out infinite alternate;
+  will-change: opacity;
+  z-index: 1;
+}
+
+@keyframes breathe {
+  0% { opacity: 0.6; }
+  100% { opacity: 1; }
+}

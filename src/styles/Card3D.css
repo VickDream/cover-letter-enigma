@@ -1,0 +1,210 @@
+/* Escena y Carta 3D con Efecto Tilt / Parallax integrado */
+.card-scene {
+  width: 320px;
+  height: 520px;
+  perspective: 1000px;
+  position: relative;
+  z-index: 2;
+  margin-top: -30px;
+}
+
+.card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  transition: transform 0.1s ease-out;
+  will-change: transform;
+}
+
+/* Caras de la carta */
+.card-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 16px;
+  background-color: var(--bg-card);
+  padding: 12px;
+  overflow: hidden;
+
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.9),
+    0 0 20px rgba(0, 153, 255, 0.25),
+    0 0 35px rgba(230, 0, 126, 0.2);
+  will-change: transform;
+}
+
+/* REFLEJANTE ANIMADO */
+.card-face::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(60deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.08) 45%,
+      rgba(0, 153, 255, 0.15) 50%,
+      rgba(255, 255, 255, 0.08) 55%,
+      transparent 70%);
+  pointer-events: none;
+  z-index: 2;
+  animation: shimmerGlare 6s ease-in-out infinite;
+}
+
+@keyframes shimmerGlare {
+  0% {
+    transform: translateX(-100%) rotate(25deg);
+  }
+  30%,
+  100% {
+    transform: translateX(100%) rotate(25deg);
+  }
+}
+
+.card-border {
+  border: 1px solid var(--logo-cyan);
+  height: 100%;
+  border-radius: 10px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  background: rgba(255, 255, 255, 0.01);
+  z-index: 3;
+}
+
+.corner-symbol {
+  position: absolute;
+  color: var(--logo-cyan);
+  font-size: 0.8rem;
+}
+
+.top-left {
+  top: 6px;
+  left: 8px;
+}
+
+.top-right {
+  top: 6px;
+  right: 8px;
+}
+
+.bottom-left {
+  bottom: 6px;
+  left: 8px;
+}
+
+.bottom-right {
+  bottom: 6px;
+  right: 8px;
+}
+
+.cover-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 6px;
+  overflow: hidden;
+  padding: 16px 16px 0 16px;
+}
+
+.album-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: top center;
+}
+
+.card-info {
+  text-align: center;
+}
+
+.card-info h2 {
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--logo-yellow);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.card-info p {
+  font-size: 0.9rem;
+  font-weight: 400;
+  opacity: 0.7;
+}
+
+.flip-hint {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--logo-cyan);
+  opacity: 0.6;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+/* CARA TRASERA */
+.card-back {
+  transform: rotateY(180deg);
+  z-index: 5;
+}
+
+.links-title {
+  font-family: var(--font-title);
+  font-weight: 700;
+  color: var(--logo-yellow);
+  font-size: 1rem;
+  letter-spacing: 2px;
+  margin-top: 10px;
+  text-transform: uppercase;
+}
+
+.links-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.arcana-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px;
+  background: rgba(0, 153, 255, 0.05);
+  border: 1px solid rgba(0, 153, 255, 0.4);
+  color: var(--text-light);
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 4px;
+  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 10;
+  cursor: pointer;
+  will-change: transform;
+}
+
+.arcana-btn .icon {
+  color: var(--logo-cyan);
+}
+
+.arcana-btn:hover {
+  background: rgba(0, 153, 255, 0.2);
+  border-color: var(--logo-cyan);
+  box-shadow: 0 0 10px rgba(0, 153, 255, 0.4);
+  transform: translateY(-2px);
+}

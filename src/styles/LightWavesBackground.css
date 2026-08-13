@@ -1,0 +1,29 @@
+.light-waves-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-color: #030206;
+  contain: strict;
+  transform: translateZ(0); /* Capa dedicada en la GPU */
+}
+
+.svg-beams-fx {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  /* El SVG se queda quieto, cero cálculo de CPU */
+}
+
+/* Solo animamos una pequeña capa de luz superpuesta, esto es mucho más ligero */
+.ambient-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03) 0%, transparent 70%);
+  animation: breathe 8s ease-in-out infinite alternate;
+}
+
+@keyframes breathe {
+  from { opacity: 0.3; transform: scale(1); }
+  to { opacity: 0.6; transform: scale(1.1); }
+}

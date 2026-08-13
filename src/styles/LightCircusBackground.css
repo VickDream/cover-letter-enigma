@@ -1,0 +1,60 @@
+.light-waves-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  background-color: var(--bg-dark);
+  contain: strict;
+  transform: translateZ(0);
+}
+
+.svg-background-fx {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+}
+
+/* Animaciones vectoriales independientes y súper ligeras */
+.svg-group-1 {
+  animation: svgMove1 14s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.svg-group-2 {
+  animation: svgMove2 18s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.svg-group-3 {
+  animation: svgMove3 20s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes svgMove1 {
+  0% {
+    transform: translate(-50px, -50px);
+  }
+  100% {
+    transform: translate(80px, 60px);
+  }
+}
+
+@keyframes svgMove2 {
+  0% {
+    transform: translate(60px, 40px);
+  }
+  100% {
+    transform: translate(-70px, -80px);
+  }
+}
+
+@keyframes svgMove3 {
+  0% {
+    transform: translate(-30px, 40px) scale(0.9);
+  }
+  100% {
+    transform: translate(40px, -50px) scale(1.1);
+  }
+}

@@ -1,0 +1,45 @@
+.light-waves-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  background-color: #030206;
+  contain: strict;
+  transform: translateZ(0);
+}
+
+.svg-beams-fx {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+}
+
+.beam-group-1 {
+  animation: beamMove1 16s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.beam-group-2 {
+  animation: beamMove2 20s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes beamMove1 {
+  0% {
+    transform: translate3d(-20px, -15px, 0);
+  }
+  100% {
+    transform: translate3d(20px, 15px, 0);
+  }
+}
+
+@keyframes beamMove2 {
+  0% {
+    transform: translate3d(15px, -20px, 0);
+  }
+  100% {
+    transform: translate3d(-15px, 20px, 0);
+  }
+}
