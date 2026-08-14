@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import {
   SiInstagram,
   SiFacebook,
@@ -12,68 +12,8 @@ import '../styles/Card3D.css';
 export default function Card3D() {
   const [isFlipped, setIsFlipped] = useState(false);
 
-  // Efecto Tilt / Parallax 3D
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  // Rango ampliado ([22, -22] y [-22, 22]) para que se incline un poco más
-  const rotateXQuantity = useTransform(mouseY, [-260, 260], [22, -22]);
-  const rotateYQuantity = useTransform(mouseX, [-160, 160], [-22, 22]);
-
-  const tiltX = useSpring(rotateXQuantity, { stiffness: 300, damping: 30 });
-  const tiltY = useSpring(rotateYQuantity, { stiffness: 300, damping: 30 });
-
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    mouseX.set(e.clientX - centerX);
-    mouseY.set(e.clientY - centerY);
-  };
-
-  const handleMouseLeave = () => {
-    mouseX.set(0);
-    mouseY.set(0);
-  };
-
-  // Soporte de giroscopio para móviles
-  useEffect(() => {
-    const handleOrientation = (e) => {
-      let beta = e.beta;   // Inclinación adelante/atrás (-180 a 180)
-      let gamma = e.gamma; // Inclinación izquierda/derecha (-90 a 90)
-
-      if (beta === null || gamma === null) return;
-
-      // Limitamos y escalamos los valores para mover los MotionValues de Framer Motion
-      beta = Math.max(-45, Math.min(45, beta));
-      gamma = Math.max(-45, Math.min(45, gamma));
-
-      mouseX.set(gamma * 4);
-      mouseY.set(beta * 4);
-    };
-
-    if (window.DeviceOrientationEvent) {
-      window.addEventListener('deviceorientation', handleOrientation, true);
-    }
-
-    return () => {
-      if (window.DeviceOrientationEvent) {
-        window.removeEventListener('deviceorientation', handleOrientation, true);
-      }
-    };
-  }, [mouseX, mouseY]);
-
   return (
-    <motion.div
-      className="card-scene"
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        rotateX: tiltX,
-        rotateY: tiltY,
-        transformStyle: 'preserve-3d'
-      }}
-    >
+    <div className="card-scene">
       <motion.div
         className="card"
         onClick={() => setIsFlipped(!isFlipped)}
@@ -136,6 +76,6 @@ export default function Card3D() {
           </div>
         </div>
       </motion.div>
-    </motion.div>
+    </div>
   );
 }
