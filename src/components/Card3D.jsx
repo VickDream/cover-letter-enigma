@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import {
   SiInstagram,
@@ -16,8 +16,9 @@ export default function Card3D() {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  const rotateXQuantity = useTransform(mouseY, [-260, 260], [12, -12]);
-  const rotateYQuantity = useTransform(mouseX, [-160, 160], [-12, 12]);
+  // Rango ampliado ([22, -22] y [-22, 22]) para que se incline un poco más
+  const rotateXQuantity = useTransform(mouseY, [-260, 260], [22, -22]);
+  const rotateYQuantity = useTransform(mouseX, [-160, 160], [-22, 22]);
 
   const tiltX = useSpring(rotateXQuantity, { stiffness: 300, damping: 30 });
   const tiltY = useSpring(rotateYQuantity, { stiffness: 300, damping: 30 });
@@ -35,8 +36,35 @@ export default function Card3D() {
     mouseY.set(0);
   };
 
+  // Soporte de giroscopio para móviles
+  useEffect(() => {
+    const handleOrientation = (e) => {
+      let beta = e.beta;   // Inclinación adelante/atrás (-180 a 180)
+      let gamma = e.gamma; // Inclinación izquierda/derecha (-90 a 90)
+
+      if (beta === null || gamma === null) return;
+
+      // Limitamos y escalamos los valores para mover los MotionValues de Framer Motion
+      beta = Math.max(-45, Math.min(45, beta));
+      gamma = Math.max(-45, Math.min(45, gamma));
+
+      mouseX.set(gamma * 4);
+      mouseY.set(beta * 4);
+    };
+
+    if (window.DeviceOrientationEvent) {
+      window.addEventListener('deviceorientation', handleOrientation, true);
+    }
+
+    return () => {
+      if (window.DeviceOrientationEvent) {
+        window.removeEventListener('deviceorientation', handleOrientation, true);
+      }
+    };
+  }, [mouseX, mouseY]);
+
   return (
-    <motion.div 
+    <motion.div
       className="card-scene"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
@@ -61,6 +89,12 @@ export default function Card3D() {
             <div className="cover-wrapper">
               <img src="logoe.webp" alt="img enigma" className="album-cover" />
             </div>
+
+            {/* <div className="card-colaborations">
+              <h2>Moisés Ávila</h2>
+              <h2>Virginia Gaytan</h2>
+              <h2>Victor Mosqueda</h2>
+            </div> */}
 
             <div className="card-info">
               <h2>Enigma</h2>

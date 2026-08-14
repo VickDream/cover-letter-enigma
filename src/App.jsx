@@ -12,7 +12,6 @@ function App() {
       <LightOpBackground />
       <main className="container">
         {/* Fondo animado optimizado y aislado */}
-        {/* Luna SVG desde la carpeta public */}
         <div className="bg-moon-wrapper">
           <img
             src="/logoe.svg"

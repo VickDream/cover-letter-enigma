@@ -2,7 +2,8 @@
 .card-scene {
   width: 320px;
   height: 520px;
-  perspective: 1000px;
+  perspective: 900px;
+  /* Un valor menor (ej. 900px o 800px) acentúa la profundidad 3D y hace que se note más la inclinación */
   position: relative;
   z-index: 2;
   margin-top: -30px;
@@ -14,8 +15,10 @@
   position: relative;
   transform-style: preserve-3d;
   cursor: pointer;
-  transition: transform 0.1s ease-out;
+  /* Transición ultra rápida para que el seguimiento del giroscopio/mouse sea inmediato */
+  transition: transform 0.05s linear;
   will-change: transform;
+  transform: translate3d(0, 0, 0);
 }
 
 /* Caras de la carta */
@@ -59,6 +62,7 @@
   0% {
     transform: translateX(-100%) rotate(25deg);
   }
+
   30%,
   100% {
     transform: translateX(100%) rotate(25deg);
@@ -121,7 +125,35 @@
   height: 100%;
   object-fit: contain;
   object-position: top center;
+  /* El drop-shadow sigue la silueta real del logo con un brillo blanco suave */
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.6)) drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
 }
+
+/* Card colaborations */
+/* .card-colaborations {
+  text-align: center;
+}
+
+.card-colaborations h2 {
+  font-family: var(--font-title);
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.card-colaborations h2:nth-child(1) {
+  color: var(--logo-cyan);
+}
+
+.card-colaborations h2:nth-child(2) {
+  color: var(--logo-magenta);
+}
+
+.card-colaborations h2:nth-child(3) {
+  color: var(--logo-purple);
+} */
 
 .card-info {
   text-align: center;
